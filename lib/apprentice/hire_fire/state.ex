@@ -3,6 +3,8 @@ defmodule Apprentice.HireFire.State do
   HireFire State.
   """
   
+  use Napper.Resource
+  
   @derive [Poison.Encoder]
   
   defstruct id: "",

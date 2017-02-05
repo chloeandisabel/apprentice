@@ -3,6 +3,8 @@ defmodule Apprentice.HireFire.ChartState do
   HireFire ChartState.
   """
   
+  use Napper.Resource
+  
   @derive [Poison.Encoder]
   
   defstruct id: "",

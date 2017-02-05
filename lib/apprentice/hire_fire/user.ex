@@ -3,6 +3,8 @@ defmodule Apprentice.HireFire.User do
   HireFire User.
   """
   
+  use Napper.Resource
+  
   @derive [Poison.Encoder]
   
   defstruct id: "",

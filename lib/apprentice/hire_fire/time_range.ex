@@ -3,6 +3,8 @@ defmodule Apprentice.HireFire.TimeRange do
   HireFire TimeRange.
   """
   
+  use Napper.Resource
+  
   @derive [Poison.Encoder]
   
   defstruct id: "",

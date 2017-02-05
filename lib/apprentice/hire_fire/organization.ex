@@ -3,6 +3,8 @@ defmodule Apprentice.HireFire.Organization do
   HireFire Organization.
   """
   
+  use Napper.Resource
+  
   @derive [Poison.Encoder]
   
   defstruct id: "",

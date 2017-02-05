@@ -3,6 +3,8 @@ defmodule Apprentice.HireFire.Membership do
   HireFire Membership.
   """
   
+  use Napper.Resource
+  
   @derive [Poison.Encoder]
   
   defstruct id: "",
