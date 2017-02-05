@@ -27,8 +27,20 @@ We need to tell Napper about HireFire's API.
 config :napper,
   url: "https://api.hirefire.io",
   auth: "Token #{System.get_env("HIREFIRE_API_KEY")}",
-  accept: "application/vnd.hirefire.v1+json"
+  accept: "application/vnd.hirefire.v1+json",
+  remove_wrapper: true
 ```
+
+That last entry tells Napper to remove the outer wrapper from HireFire
+responses. When asking for a list of organizations, HireFire returns
+
+```json
+{"organizations": [...]}
+```
+
+but Napper expects that innter array of objects. Setting `remove_wrapper` to
+`true` tells Napper to strip off the outer "organizations" object, returning
+only the array.
 
 ## Using Apprentice
 
