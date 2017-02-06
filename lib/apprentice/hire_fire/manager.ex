@@ -32,21 +32,21 @@ defmodule Apprentice.HireFire.Manager do
     type: String.t,
     application_id: String.t,
     name: String.t,
-    "enabled": false,
+    enabled: false,
     metric_value: String.t,
-    "dyno_quantity": integer,
+    dyno_quantity: integer,
     last_checkup_time: String.t,
     last_scale_time: String.t,
-    "minimum": integer,
-    "maximum": integer,
-    "notify": boolean,
-    "notify_quantity": integer,
-    "notify_after": integer,
+    minimum: integer,
+    maximum: integer,
+    notify: boolean,
+    notify_quantity: integer,
+    notify_after: integer,
     created_at: String.t,
     updated_at: String.t,
     ratio: integer,
-    "decrementable": boolean,
-    "issue": String.t
+    decrementable: boolean,
+    issue: String.t
   }
 end
 
