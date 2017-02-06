@@ -170,7 +170,6 @@ defmodule Apprentice.HireFire.Manager do
   def updatable(%__MODULE__{type: type} = manager) do
     Map.take(manager, @updatable_fields[type])
   end
-
 end
 
 defimpl Napper.Endpoint, for: Apprentice.HireFire.Manager do
