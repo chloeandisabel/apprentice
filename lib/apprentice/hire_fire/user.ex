@@ -3,7 +3,7 @@ defmodule Apprentice.HireFire.User do
   HireFire User.
   """
   
-  use Napper.Resource
+  use Napper.Resource, except: [:create]
   
   @derive [Poison.Encoder]
   

@@ -3,7 +3,7 @@ defmodule Apprentice.HireFire.ChartState do
   HireFire ChartState.
   """
   
-  use Napper.Resource
+  use Napper.Resource, only: [:list]
   
   @derive [Poison.Encoder]
   

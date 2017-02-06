@@ -3,7 +3,7 @@ defmodule Apprentice.HireFire.State do
   HireFire State.
   """
   
-  use Napper.Resource
+  use Napper.Resource, only: [:list]
   
   @derive [Poison.Encoder]
   
