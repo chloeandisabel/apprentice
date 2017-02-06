@@ -7,19 +7,67 @@ defmodule Apprentice.HireFire.Manager do
 
   @derive [Poison.Encoder]
 
-  @types [
-    "Manager::Web::HireFire::ResponseTime",
-    "Manager::Worker::HireFire::JobQueue",
-    "Manager::Web::Logplex::Load",
-    "Manager::Web::Logplex::ResponseTime",
-    "Manager::Web::Logplex::RPM",
-    "Manager::Web::NewRelic::V1::Apdex",
-    "Manager::Web::NewRelic::V1::ResponseTime",
-    "Manager::Web::NewRelic::V1::RPM",
-    "Manager::Web::NewRelic::V2::Apdex",
-    "Manager::Web::NewRelic::V2::ResponseTime",
-    "Manager::Web::NewRelic::V2::RPM"
+  # The updatable fields common to all manager types.
+  @basic_updatable_fields [
+    :name, :type, :enabled, :minimum, :maximum, :notify, :notify_quantity, :notify_after
   ]
+
+  # A map from manager type to updatable field.
+  @updatable_fields %{
+    "Manager::Web::HireFire::ResponseTime" => @basic_updatable_fields ++ [
+      :url, :scale_up_on_503,
+      :minimum_response_time, :maximum_response_time,
+      :upscale_quantity, :upscale_sensitivity, :upscale_timeout,
+      :downscale_quantity, :downscale_sensitivity, :downscale_timeout
+    ],
+    "Manager::Worker::HireFire::JobQueue" => @basic_updatable_fields ++ [
+      :decrementable,
+      :ratio
+    ],
+    "Manager::Web::Logplex::Load" => @basic_updatable_fields ++ [
+      :minimum_load, :maximum_load
+    ],
+    "Manager::Web::Logplex::ResponseTime" => @basic_updatable_fields ++ [
+      :minimum_response_time, :maximum_response_time
+    ],
+    "Manager::Web::Logplex::RPM" => @basic_updatable_fields ++ [
+      :ratio
+    ],
+    "Manager::Web::NewRelic::V1::Apdex" => @basic_updatable_fields ++ [
+      :minimum_apdex, :maximum_apdex,
+      :new_relic_account_id, :new_relic_api_key, :new_relic_app_id,
+      :upscale_quantity, :upscale_sensitivity, :upscale_timeout,
+      :downscale_quantity, :downscale_sensitivity, :downscale_timeout
+    ],
+    "Manager::Web::NewRelic::V1::ResponseTime" => @basic_updatable_fields ++ [
+      :url, :scale_up_on_503,
+      :minimum_response_time, :maximum_response_time,
+      :new_relic_account_id, :new_relic_api_key, :new_relic_app_id,
+      :upscale_quantity, :upscale_sensitivity, :upscale_timeout,
+      :downscale_quantity, :downscale_sensitivity, :downscale_timeout
+    ],
+    "Manager::Web::NewRelic::V1::RPM" => @basic_updatable_fields ++ [
+      :ratio,
+      :new_relic_account_id, :new_relic_api_key, :new_relic_app_id
+    ],
+    "Manager::Web::NewRelic::V2::Apdex" => @basic_updatable_fields ++ [
+      :minimum_apdex, :maximum_apdex,
+      :new_relic_account_id, :new_relic_api_key, :new_relic_app_id,
+      :upscale_quantity, :upscale_sensitivity, :upscale_timeout,
+      :downscale_quantity, :downscale_sensitivity, :downscale_timeout
+    ],
+    "Manager::Web::NewRelic::V2::ResponseTime" => @basic_updatable_fields ++ [
+      :url, :scale_up_on_503,
+      :minimum_response_time, :maximum_response_time,
+      :new_relic_account_id, :new_relic_api_key, :new_relic_app_id,
+      :upscale_quantity, :upscale_sensitivity, :upscale_timeout,
+      :downscale_quantity, :downscale_sensitivity, :downscale_timeout
+    ],
+    "Manager::Web::NewRelic::V2::RPM" => @basic_updatable_fields ++ [
+      :ratio,
+      :new_relic_account_id, :new_relic_api_key, :new_relic_app_id
+    ],
+  }
 
   defmodule Issue do
     defstruct [:id, :parent_id, :parent_type, :operation, :response, :message]
@@ -109,8 +157,20 @@ defmodule Apprentice.HireFire.Manager do
     updated_at: String.t
   }
 
+  @doc "Map all legal manager types to their updatable fields."
+  def updatable_fields, do: @updatable_fields
+
   @doc "The list of all legal manager types."
-  def types, do: @types
+  def types, do: Map.keys(@updatable_fields)
+
+  @doc """
+  Returns a new map containing the updatable parameters for `manager`'s
+  type.
+  """
+  def updatable(%__MODULE__{type: type} = manager) do
+    Map.take(manager, @updatable_fields[type])
+  end
+
 end
 
 defimpl Napper.Endpoint, for: Apprentice.HireFire.Manager do
