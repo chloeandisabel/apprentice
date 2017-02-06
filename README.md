@@ -9,13 +9,20 @@ Apprentice defines structs for all of the resources exposed by HireFire's API.
 
 ## Installation
 
-The package can be installed by adding Apprentice to your list of dependencies
-in `mix.exs`. You'll also need Napper.
+First, add Apprentice to your `mix.exs` dependencies:
 
 ```elixir
 def deps do
-  [{:apprentice, git: "https://github.com/chloeandisabel/apprentice.git"},
-   {:napper, git: "https://github.com/chloeandisabel/napper.git"}]
+  [{:apprentice, git: "https://github.com/chloeandisabel/apprentice.git"}]
+end
+```
+
+and run `$ mix deps.get`. Now, list the `:apprentice` application as your
+application dependency:
+
+```elixir
+def applications do
+  [applications: [:apprentice]]
 end
 ```
 
@@ -47,16 +54,10 @@ only the array.
 Let's try out Apprentice from within IEX.
 
 ```sh
-iex -S mix
+$ iex -S mix
 ```
 
-First we need to start HTTPoison (Napper needs this; see the Napper docs).
-
-```elixir
-iex> HTTPoison.start
-```
-
-Now we can create a client using Napper. This example assumes we've used our
+First we create a client using Napper. This example assumes we've used our
 config file to configure Napper properly.
 
 ```elixir
