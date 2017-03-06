@@ -157,19 +157,11 @@ defmodule Apprentice.HireFire.Manager do
     updated_at: String.t
   }
 
-  @doc "Map all legal manager types to their updatable fields."
+  @doc "A map of all legal manager types => their updatable fields."
   def updatable_fields, do: @updatable_fields
 
   @doc "The list of all legal manager types."
   def types, do: Map.keys(@updatable_fields)
-
-  @doc """
-  Returns a new map containing the updatable parameters for `manager`'s
-  type.
-  """
-  def updatable(%__MODULE__{type: type} = manager) do
-    Map.take(manager, @updatable_fields[type])
-  end
 end
 
 defimpl Napper.Endpoint, for: Apprentice.HireFire.Manager do
