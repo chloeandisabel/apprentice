@@ -8,18 +8,18 @@ defmodule Apprentice.HireFire.Recipient do
   @derive [Poison.Encoder]
 
   defstruct id: "",
-    application_id: "",
-    email: "",
-    created_at: nil,
-    updated_at: nil
+            application_id: "",
+            email: "",
+            created_at: nil,
+            updated_at: nil
 
-  @type t :: %__MODULE__ {
-    id: String.t,
-    application_id: String.t,
-    email: String.t,
-    created_at: String.t,
-    updated_at: String.t
-  }
+  @type t :: %__MODULE__{
+          id: String.t(),
+          application_id: String.t(),
+          email: String.t(),
+          created_at: String.t(),
+          updated_at: String.t()
+        }
 end
 
 defimpl Napper.Endpoint, for: Apprentice.HireFire.Recipient do
